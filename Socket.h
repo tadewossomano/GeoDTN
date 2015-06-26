@@ -16,6 +16,8 @@
 #include<stdio.h> 
 #include<netinet/in.h>
 #include<sys/param.h>
+#include <errno.h>
+#include <fcntl.h>
 struct val {
 double val1;
 double val2;
@@ -72,18 +74,12 @@ class Socket
 
   int m_sock;
   sockaddr_in m_addr;
-  /////////////////////////////////////////////
-double displacement=0;
-double speed=0;
-double theta=0 ;
-double lat_d=0;
-double long_d=0;
-double alt_d=0;
-///////////////////////////////////////////////
 
-
-
+double displacement;
+double speed;
+double theta;
+double lat_d;
+double long_d;
+double alt_d;
 };
-
-
 #endif
