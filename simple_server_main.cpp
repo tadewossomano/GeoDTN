@@ -3,6 +3,12 @@
 int main ( int argc, char * argv[] )
 {
   std::cout << "running....\n";
+  displacement=0;
+  theta=0;
+  speed=0;
+lat_d=0;;
+ long_d=0;
+ alt_d=0;
   try
     {
       // Create the socket
