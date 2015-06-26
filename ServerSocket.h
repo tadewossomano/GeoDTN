@@ -1,4 +1,4 @@
-fndef ServerSocket_class
+#ifndef ServerSocket_class
 #define ServerSocket_class
 #include "Socket.h"
 class ServerSocket : private Socket
