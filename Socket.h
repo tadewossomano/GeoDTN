@@ -3,12 +3,19 @@
 #include <libgpsmm>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
 #include <unistd.h>
 #include <string>
 #include <arpa/inet.h>
 #include<cmath>
+#include<ctgmath>
+#include<inttypes.h>
+#include<unistd.h>
+#include<sys/socket.h>
+#include<sys/types.h>
+#include<netdb.h>
+#include<stdio.h> 
+#include<netinet/in.h>
+#include<sys/param.h>
 struct val {
 double val1;
 double val2;
