@@ -1,21 +1,8 @@
-nclude "ServerSocket.h"
+#include "ServerSocket.h"
 #include "SocketException.h"
-#include <string>
-#include<iostream>
-#include<vector>
-#include<sstream>
 int main ( int argc, char * argv[] )
 {
   std::cout << "running....\n";
-/////////////////////////////////////////////
-double displacement;
-double speed;
-double theta ;
-double lat_d;
-double long_d;
-double alt_d;
-///////////////////////////////////////////////
-
   try
     {
       // Create the socket
