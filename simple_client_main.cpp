@@ -1,15 +1,11 @@
-nclude "ClientSocket.h"
+#include "ClientSocket.h"
 #include "Socket.h"
 #include "SocketException.h"
 #include <iostream>
 #include <string>
-#include <libgpsmm.h>
-#include "string.h"
-#include <string.h>
-#include<sstream>
+#include <libgpsmm>
 #include<inttypes.h>
 #include<unistd.h>
-//#include<vector>
 #include<arpa/inet.h>
 #include<sys/socket.h>
 #include<sys/types.h>
@@ -17,7 +13,6 @@ nclude "ClientSocket.h"
 #include<stdio.h> 
 #include<netinet/in.h>
 #include<sys/param.h>
-#include<unistd.h>
 #include<cmath>
 #include<ctgmath>
 
@@ -34,7 +29,7 @@ gpsmm gps_rec("localhost", DEFAULT_GPSD_PORT);
 
     if (gps_rec.stream(WATCH_ENABLE|WATCH_JSON) == NULL) 
             {
-        cerr << "No GPSD running.\n";
+        std::cerr << "No GPSD running.\n";
         return 1;
              }
 
