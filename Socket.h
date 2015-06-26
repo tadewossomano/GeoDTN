@@ -72,6 +72,15 @@ class Socket
 
   int m_sock;
   sockaddr_in m_addr;
+  /////////////////////////////////////////////
+double displacement=0;
+double speed=0;
+double theta=0 ;
+double lat_d=0;
+double long_d=0;
+double alt_d=0;
+///////////////////////////////////////////////
+
 
 
 };
