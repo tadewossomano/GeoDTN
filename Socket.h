@@ -33,6 +33,12 @@ double val3;
 double val4;
 double val5;
 double val6;};
+double displacement;
+double speed;
+double theta;
+double lat_d;
+double long_d;
+double alt_d;
 /******************************/
 const int equatorial_radius=6378200;
 const int polar_radius =6356750;
