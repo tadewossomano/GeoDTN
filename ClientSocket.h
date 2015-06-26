@@ -1,4 +1,4 @@
-fndef ClientSocket_class
+#ifndef ClientSocket_class
 #define ClientSocket_class
 #include <libgpsmm.h>
 #include "Socket.h"
