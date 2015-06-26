@@ -1,15 +1,10 @@
-nclude "Socket.h"
-#include "string.h"
-#include <string.h>
+#include "Socket.h"
 #include <errno.h>
 #include <fcntl.h>
 #include<iostream>
 #include <string>
-#include <sstream>
 #include<iostream>
-#include <libgpsmm.h>
-//#include <libgpsmm>
-#include<gps.h>
+#include <libgpsmm>
 #include<cmath>
 using namespace std;
 Socket::Socket() :
@@ -128,17 +123,7 @@ bool Socket::send(val2 values3 ) const
 
 int Socket::recv(val values2 )  const
 {
-  char buf [ MAXRECV + 1 ];//char buf [ MAXRECV + 1 ];
-int rx=0;
-double displacement;
-double speed;
-double theta ;
-double lat_d;
-double long_d;
-double alt_d;
-
-
- // s = "";//gpsdata="";//
+  char buf [ MAXRECV + 1 ];
 
   memset ( buf, 0, MAXRECV + 1 );
 
@@ -159,28 +144,6 @@ struct val *values=(struct val*) buf;
 if(!std::isnan(values->val1) && !std::isnan(values->val2) && !std::isnan(values->val3) && !std::isnan(values->val4),!std::isnan(values->val5),!std::isnan(values->val6))
 
 printf("received:%f %f %f %f %f %f\n",values->val1,values->val2,values->val3,values->val4,values->val5,values->val6);
-//////////////////////
-/*
-//struct val2 values3 ;
-//values3={newdata->fix.latitude,newdata->fix.longitude,newdata->fix.altitude,newdata->fix.speed,newdata->fix.track,newdata->fix.time};
-////////////////////////
-theta=values3.val5-values->val5;
-displacement=sqrt(pow((values3.val1-values->val1)*(pi*polar_radius/180),2)+pow(((values3.val2-values->val2)*pi*polar_radius/180)*cos((values3.val1+values->val1)/2),2)+pow((values3.val3-values->val3)/3.2808,2));
-//lat_d=pow((values3.val1-values->val1)*(pi*polar_radius/180),2);
-//long_d=pow(((values3.val2-values->val2)*pi*polar_radius/180)*cos((values3.val1+values->val1)/2)),2);
-//alt_d=pow((values3.val3-values->val3)/3.2808,2);
-printf("local values:%f %f %f %f %f %f \n",values3.val1,values3.val2,values3.val3,values3.val4,values3.val5,values3.val6);
-//displacement=sqrt(lat_d+long_d+alt_d);//line 171
-if( theta >=0 ||theta <=180)
-speed=sqrt(pow(values3.val4,2)+pow(values->val4,2)-2*values3.val4*values->val4*cos(theta*pi/180));
-else 
-speed=sqrt(pow(values3.val4,2)+pow(values->val4,2)-2*values3.val4*values->val4*cos(abs(theta*pi/180)));//here one condition should be added to include nodes moving towards each other.
-printf("RawGeo Parameters:%f %f \n",displacement,speed);
-
-
- ************************* */    
-
-//close(m_sock);
       return status;
 
     }
