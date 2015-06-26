@@ -1,12 +1,6 @@
 #include "Socket.h"
 #include <errno.h>
 #include <fcntl.h>
-#include<iostream>
-#include <string>
-#include<iostream>
-#include <libgpsmm>
-#include<cmath>
-using namespace std;
 Socket::Socket() :
   m_sock ( -1 )
 {
