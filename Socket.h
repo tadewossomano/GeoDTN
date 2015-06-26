@@ -39,6 +39,7 @@ double theta;
 double lat_d;
 double long_d;
 double alt_d;
+double climb;
 /******************************/
 const int equatorial_radius=6378200;
 const int polar_radius =6356750;
