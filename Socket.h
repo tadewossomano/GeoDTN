@@ -1,6 +1,6 @@
-fndef Socket_class
+#ifndef Socket_class
 #define Socket_class
-#include <libgpsmm.h>
+#include <libgpsmm>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -8,7 +8,6 @@ fndef Socket_class
 #include <unistd.h>
 #include <string>
 #include <arpa/inet.h>
-#include <string>
 #include<cmath>
 struct val {
 double val1;
