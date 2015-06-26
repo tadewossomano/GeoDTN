@@ -1,23 +1,6 @@
 #include "ClientSocket.h"
 #include "Socket.h"
 #include "SocketException.h"
-#include <iostream>
-#include <string>
-#include <libgpsmm>
-#include<inttypes.h>
-#include<unistd.h>
-#include<arpa/inet.h>
-#include<sys/socket.h>
-#include<sys/types.h>
-#include<netdb.h>
-#include<stdio.h> 
-#include<netinet/in.h>
-#include<sys/param.h>
-#include<cmath>
-#include<ctgmath>
-
-using namespace std;
-
 int main ( int argc, char * argv[] )
 {
   try
