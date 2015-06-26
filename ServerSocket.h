@@ -15,7 +15,5 @@ class ServerSocket : private Socket
   void accept ( ServerSocket& );
 
 };
-
-
 #endif
 
