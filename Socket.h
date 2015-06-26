@@ -74,12 +74,5 @@ class Socket
 
   int m_sock;
   sockaddr_in m_addr;
-
-double displacement;
-double speed;
-double theta;
-double lat_d;
-double long_d;
-double alt_d;
 };
 #endif
