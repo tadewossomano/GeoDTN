@@ -1,6 +1,4 @@
-kefile for the socket programming example
-#
-
+#Makefile for the socket programming example
 simple_server_objects = ServerSocket.o Socket.o simple_server_main.o
 simple_client_objects = ClientSocket.o Socket.o simple_client_main.o
 CXXFLAGS=-std=c++0x #for c++0x Adaptation
