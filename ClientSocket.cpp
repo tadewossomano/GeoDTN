@@ -1,3 +1,5 @@
+// Implementation of the ClientSocket class
+
 #include "ClientSocket.h"
 #include "SocketException.h"
 #include <string>
@@ -38,4 +40,3 @@ const ClientSocket& ClientSocket::operator >> ( val  values  ) const
 
   return *this;
 }
-
