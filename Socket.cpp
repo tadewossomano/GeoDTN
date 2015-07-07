@@ -133,16 +133,7 @@ int Socket::recv(val values2 )  const
 {
   char buf [ MAXRECV + 1 ];//char buf [ MAXRECV + 1 ];
 int rx=0;
-double displacement;
-double speed;
-double theta ;
-double lat_d;
-double long_d;
-double alt_d;
-
-
  // s = "";//gpsdata="";//
-
   memset ( buf, 0, MAXRECV + 1 );
 
   int status = ::recv ( m_sock, buf, MAXRECV, 0 );
