@@ -1,3 +1,5 @@
+// Implementation of the ServerSocket class
+
 #include "ServerSocket.h"
 #include "SocketException.h"
 ServerSocket::ServerSocket ( int port )
@@ -37,8 +39,9 @@ const ServerSocket& ServerSocket::operator << ( val2 values3 ) const
 
 
 const ServerSocket& ServerSocket::operator >>(val values ) const
+//const ServerSocket& ServerSocket::operator <=(val values ) const
 {
-  if ( ! Socket::recv ( values  ) )
+  if (! Socket::recv ( values  ))
     {
       throw SocketException ( "Could not read from socket." );
     }
@@ -53,4 +56,5 @@ void ServerSocket::accept ( ServerSocket& sock )
       throw SocketException ( "Could not accept socket." );
     }
 }
+
 
