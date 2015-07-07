@@ -6,7 +6,7 @@ CXXFLAGS=-std=c++0x #for c++0x Adaptation
 all : simple_server simple_client
 
 simple_server: $(simple_server_objects)
-	g++ -o simple_server $(simple_server_objects)
+	g++ -lgps -o simple_server $(simple_server_objects)
 
 
 simple_client: $(simple_client_objects)
