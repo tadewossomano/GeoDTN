@@ -14,17 +14,6 @@ int main ( int argc, char * argv[] )
 {
 Socket skt;
   std::cout << "running....\n";
-/////////////////////////////////////////////
-double displacement;
-double speed;
-double theta ;
-double lat_d;
-double long_d;
-double alt_d;
-  char buf [ MAXRECV + 1 ];
-//struct gps_data_t* newdata;
-///////////////////////////////////////////////
-
   try
     {
       // Create the socket
