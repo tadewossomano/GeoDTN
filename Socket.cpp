@@ -154,7 +154,7 @@ double alt_d;
     }
   else if ( status == 0 )
     {
-      return {};//0;
+      return 0;
     }
 
   else
@@ -179,7 +179,7 @@ char buf [ MAXRECV + 1 ];
  memset ( buf, 0, MAXRECV + 1 );
 int status = ::recv ( m_sock, buf, MAXRECV, 0 );
  struct val *values=(struct val*) buf;
-return *values;
+return values;
 
 }
 
