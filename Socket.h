@@ -1,23 +1,17 @@
+// Definition of the Socket class
+
 #ifndef Socket_class
 #define Socket_class
-#include <libgpsmm>
+#include <libgpsmm.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
 #include <unistd.h>
 #include <string>
 #include <arpa/inet.h>
+#include <string>
 #include<cmath>
-#include<ctgmath>
-#include<inttypes.h>
-#include<unistd.h>
-#include<sys/socket.h>
-#include<sys/types.h>
-#include<netdb.h>
-#include<stdio.h> 
-#include<netinet/in.h>
-#include<sys/param.h>
-#include <errno.h>
-#include <fcntl.h>
 struct val {
 double val1;
 double val2;
@@ -33,14 +27,6 @@ double val3;
 double val4;
 double val5;
 double val6;};
-/******************************/
-double displacement;
-double speed;
-double theta;
-double lat_d;
-double long_d;
-double alt_d;
-double climb;
 /******************************/
 const int equatorial_radius=6378200;
 const int polar_radius =6356750;
@@ -71,7 +57,8 @@ class Socket
 
   // Data Transimission
   bool send (val2) const;
-  int recv( val ) const;//((char*)gps_data_t*);//
+  int  recv( val ) const;//((char*)gps_data_t*);//
+  val recv2(val);
 
 
   void set_non_blocking ( const bool );
@@ -82,5 +69,9 @@ class Socket
 
   int m_sock;
   sockaddr_in m_addr;
+
+
 };
+
+
 #endif
