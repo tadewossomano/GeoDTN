@@ -1,4 +1,20 @@
+// Implementation of the Socket class.
+
+
 #include "Socket.h"
+#include "string.h"
+#include <string.h>
+#include <errno.h>
+#include <fcntl.h>
+#include<iostream>
+#include <string>
+#include <sstream>
+#include<iostream>
+#include <libgpsmm.h>
+//#include <libgpsmm>
+#include<gps.h>
+#include<cmath>
+using namespace std;
 Socket::Socket() :
   m_sock ( -1 )
 {
@@ -115,7 +131,17 @@ bool Socket::send(val2 values3 ) const
 
 int Socket::recv(val values2 )  const
 {
-  char buf [ MAXRECV + 1 ];
+  char buf [ MAXRECV + 1 ];//char buf [ MAXRECV + 1 ];
+int rx=0;
+double displacement;
+double speed;
+double theta ;
+double lat_d;
+double long_d;
+double alt_d;
+
+
+ // s = "";//gpsdata="";//
 
   memset ( buf, 0, MAXRECV + 1 );
 
@@ -128,21 +154,34 @@ int Socket::recv(val values2 )  const
     }
   else if ( status == 0 )
     {
-      return 0;
+      return {};//0;
     }
+
   else
     {
 struct val *values=(struct val*) buf;
+
 if(!std::isnan(values->val1) && !std::isnan(values->val2) && !std::isnan(values->val3) && !std::isnan(values->val4),!std::isnan(values->val5),!std::isnan(values->val6))
 
 printf("received:%f %f %f %f %f %f\n",values->val1,values->val2,values->val3,values->val4,values->val5,values->val6);
+  
+//close(m_sock);
+
       return status;
 
     }
 
 }
 
+val Socket:: recv2(val values3){
 
+char buf [ MAXRECV + 1 ];
+ memset ( buf, 0, MAXRECV + 1 );
+int status = ::recv ( m_sock, buf, MAXRECV, 0 );
+ struct val *values=(struct val*) buf;
+return *values;
+
+}
 
 bool Socket::connect ( const std::string host, const int port )
 {
@@ -185,4 +224,3 @@ void Socket::set_non_blocking ( const bool b )
 	  F_SETFL,opts );
 
 }
-
