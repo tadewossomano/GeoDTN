@@ -1,0 +1,8 @@
+#!/usr/bin/python
+import cv
+src = cv.LoadImage("4.jpg")
+cv.NamedWindow("RGB",cv.CV_WINDOW_AUTOSIZE)
+cv.ShowImage("RGB", src)
+cv.WaitKey(500)
+input("Press Enter to continue...")
+cv.DestroyWindow("RGB")
