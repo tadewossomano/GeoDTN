@@ -2,7 +2,7 @@
 
   This file implements an extension of pyqtgraph for visualizing PointClouds.
 
-  Last update: 04/10/2013, Marco Centin (marco.centin@gmail.com)
+  Last update: 04/10/2013, Tadewos Somano(tadewos85@gmail.com)
 
 """
 
