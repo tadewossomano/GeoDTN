@@ -1,11 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Simple demo of Gentle Boost with stumps and 2D data
-% Implementation of gentleBoost. The algorithm is described in:
-% Jeong-Hyun, Kim 
-% V.I.S. Lab.
-% 
 
-%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 clear all
 % Define plot style parameters
 plotstyle.colors = {'gs', 'ro'};  % color for each class
@@ -35,62 +31,62 @@ while 1
     end
 end
 [Nfeatures, Nsamples] = size(X); 
-%%% ¿şÀÌÆ® ¸¸µé±â
+%%% ì›¨ì´íŠ¸ ë§Œë“¤ê¸°
 D = ones(1,Nsamples) / Nsamples;
 
 %%
-%%%Á÷¼± ºĞ·ù Feature ¸¸µé±â %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% xÃà¿¡ ´ëÇØ¼­ µ¥ÀÌÅÍ »ı¼º
+%%%ì§ì„  ë¶„ë¥˜ Feature ë§Œë“¤ê¸° %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% xì¶•ì— ëŒ€í•´ì„œ ë°ì´í„° ìƒì„±
 sortX = sort(X(1,:));
-WeakData = ones(1,3); %°¡·ÎÀÎÁö(1) ¼¼·ÎÀÎÁö(2), ÁÂÇ¥, ¿ŞÂÊ È¤Àº À§°¡ +1ÀÎ°¡ -1 Áö¿ªÀÎ°¡?
+WeakData = ones(1,3); %ê°€ë¡œì¸ì§€(1) ì„¸ë¡œì¸ì§€(2), ì¢Œí‘œ, ì™¼ìª½ í˜¹ì€ ìœ„ê°€ +1ì¸ê°€ -1 ì§€ì—­ì¸ê°€?
 WeakCount = 1;
 for j=1:Nsamples-1
-    %°¡·Î x¸é 1, ¼¼·Î y¸é 2  
+    %ê°€ë¡œ xë©´ 1, ì„¸ë¡œ yë©´ 2  
     WeakData(WeakCount,:) = [1, ( sortX(j)+sortX(j+1) )/2, +1];
     WeakCount = WeakCount + 1;
     WeakData(WeakCount,:) = [1, ( sortX(j)+sortX(j+1) )/2, -1];
     WeakCount = WeakCount + 1;
 end
 
-%%% yÃà¿¡ ´ëÇØ¼­ µ¥ÀÌÅÍ »ı¼º
+%%% yì¶•ì— ëŒ€í•´ì„œ ë°ì´í„° ìƒì„±
 sortY = sort(X(2,:));
 for j=1:Nsamples-1
-    %°¡·Î x¸é 1, ¼¼·Î y¸é 2  
+    %ê°€ë¡œ xë©´ 1, ì„¸ë¡œ yë©´ 2  
     WeakData(WeakCount,:) = [2, ( sortY(j)+sortY(j+1) )/2, +1];
     WeakCount = WeakCount + 1;
     WeakData(WeakCount,:) = [2, ( sortY(j)+sortY(j+1) )/2, -1];
     WeakCount = WeakCount + 1;
 end
 WeakCount = WeakCount - 1;
-disp( sprintf('Feature °³¼ö´Â : %d', WeakCount) );
+disp( sprintf('Feature ê°œìˆ˜ëŠ” : %d', WeakCount) );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%¹İº¹È½¼ö
+%ë°˜ë³µíšŸìˆ˜
 T = 500;
 
-%T°³ÀÇ Æ¯Â¡°ú ¾ËÆÄ
+%Tê°œì˜ íŠ¹ì§•ê³¼ ì•ŒíŒŒ
 TrainWeak = ones(1,2);
 
 %%
 for tIndex=1:T
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Weak Classifier¸¦ ÀÌ¿ëÇÏ¿© ÃÖ°í ÀÛÀº ¿¡·¯¸¦ Ã£´Â´Ù.
+%%% Weak Classifierë¥¼ ì´ìš©í•˜ì—¬ ìµœê³  ì‘ì€ ì—ëŸ¬ë¥¼ ì°¾ëŠ”ë‹¤.
 tTError=[0];
-%%% Æ¯Â¡¿¡ ´ëÇÑ ¸ğµç ¿¡·¯¸¦ ±¸ÇÏ°í ±× Áß °¡Àå ÀÛÀº ¿¡·¯°ªÀ» Ã£´Â´Ù. ±× ¿¡·¯¿¡ ´ëÇÑ Æ¯Â¡¿ä¼Òµéµµ ÀúÀåÇÏ°í ÀÖ¾î¾ß ÇÔ.
+%%% íŠ¹ì§•ì— ëŒ€í•œ ëª¨ë“  ì—ëŸ¬ë¥¼ êµ¬í•˜ê³  ê·¸ ì¤‘ ê°€ì¥ ì‘ì€ ì—ëŸ¬ê°’ì„ ì°¾ëŠ”ë‹¤. ê·¸ ì—ëŸ¬ì— ëŒ€í•œ íŠ¹ì§•ìš”ì†Œë“¤ë„ ì €ì¥í•˜ê³  ìˆì–´ì•¼ í•¨.
 for j=1:WeakCount
     Error=0;
-    %%j¹øÂ° Æ¯Â¡¿¡ ´ëÇØ¼­ error°ªÀ» ±¸ÇÑ´Ù.
+    %%jë²ˆì§¸ íŠ¹ì§•ì— ëŒ€í•´ì„œ errorê°’ì„ êµ¬í•œë‹¤.
     for k=1:Nsamples
-        %%Xµ¥ÀÌÅÍ°¡ ¿ŞÂÊ +1 Å¬·¡½º ÀÎ°¡?
+        %%Xë°ì´í„°ê°€ ì™¼ìª½ +1 í´ë˜ìŠ¤ ì¸ê°€?
         if(WeakData(j,2) >  X(WeakData(j,1),k))
             if(WeakData(j,3) ~= Y(k) ) 
-                %Àß¸ø ±¸º°µÇ¾î ¿şÀÌÆ®¸¦ ´õÇÔ
+                %ì˜ëª» êµ¬ë³„ë˜ì–´ ì›¨ì´íŠ¸ë¥¼ ë”í•¨
                 Error = Error + D(1,k);
             end
         else
             if( WeakData(j,3)*-1 ~= Y(k) )
-                %Àß¸ø ±¸º°µÇ¾î ¿şÀÌÆ®¸¦ ´õÇÔ
+                %ì˜ëª» êµ¬ë³„ë˜ì–´ ì›¨ì´íŠ¸ë¥¼ ë”í•¨
                 Error = Error + D(1,k);
             end
         end
@@ -98,38 +94,38 @@ for j=1:WeakCount
     tTError(j)=[ Error];
 end
 
-% tTError¿¡ feature¿¡ ´ëÇÑ error°ªÀÌ µé¾îÀÖ´Ù. ÀÌÁß¿¡ ÃÖ°í ÀÛÀº Error°ªÀ» Ã£°í ±× Weak¸¦ ¼±ÅÃ
+% tTErrorì— featureì— ëŒ€í•œ errorê°’ì´ ë“¤ì–´ìˆë‹¤. ì´ì¤‘ì— ìµœê³  ì‘ì€ Errorê°’ì„ ì°¾ê³  ê·¸ Weakë¥¼ ì„ íƒ
 [sortTError,sortIndex]=sort(tTError);
 
-%ÃÖ°í ÀÛÀº ¿¡·¯°ªÀ¸·Î ¾ËÆÄ°ªÀ» ±¸ÇÑ´Ù.
+%ìµœê³  ì‘ì€ ì—ëŸ¬ê°’ìœ¼ë¡œ ì•ŒíŒŒê°’ì„ êµ¬í•œë‹¤.
 alpha = 0.5 * log( (1-sortTError(1,1)) / sortTError(1,1) ) ;
 
-%¾ËÆÄ°ª°ú ¾àºĞ·ù±â¸¦ ÀúÀå(feature=ºĞ·ù¹æ¹ı)
+%ì•ŒíŒŒê°’ê³¼ ì•½ë¶„ë¥˜ê¸°ë¥¼ ì €ì¥(feature=ë¶„ë¥˜ë°©ë²•)
 TrainWeak(tIndex, :) = [sortIndex(1,1),alpha];
 
-%weight ¾÷µ¥ÀÌÆ®
+%weight ì—…ë°ì´íŠ¸
 for j=1:Nsamples
-    %%Xµ¥ÀÌÅÍ°¡ ¿ŞÂÊ +1 Å¬·¡½º ÀÎ°¡?
+    %%Xë°ì´í„°ê°€ ì™¼ìª½ +1 í´ë˜ìŠ¤ ì¸ê°€?
     if(WeakData(sortIndex(1,1),2) >  X(WeakData(sortIndex(1,1),1),j))
         if(WeakData(sortIndex(1,1),3) ~= Y(j) ) 
-            %Àß¸ø ±¸º°µÊ
+            %ì˜ëª» êµ¬ë³„ë¨
             D(1,j) = D(1,j) * exp(alpha);
         else
-            %Àß ±¸º°µÊ
+            %ì˜ êµ¬ë³„ë¨
             D(1,j) = D(1,j) * exp(-alpha);
         end
     else
         if( WeakData(sortIndex(1,1),3)*-1 ~= Y(j) )
-            %Àß¸ø ±¸º°µÇ¾î ¿şÀÌÆ®¸¦ ´õÇÔ
+            %ì˜ëª» êµ¬ë³„ë˜ì–´ ì›¨ì´íŠ¸ë¥¼ ë”í•¨
             D(1,j) = D(1,j) * exp(alpha);
         else
-            %Àß ±¸º°µÊ
+            %ì˜ êµ¬ë³„ë¨
             D(1,j) = D(1,j) * exp(-alpha);
         end
     end
 end
 
-disp( sprintf('%d ¹øÂ°', tIndex));
+disp( sprintf('%d ë²ˆì§¸', tIndex));
 disp( sprintf('error %f', sortTError(1,1) ));
 disp( sprintf('alpha %f' ,alpha));
 disp( sprintf('z %f' , sum(D) ));
@@ -144,8 +140,8 @@ disp('============================ next round ==================================
 end
 
 
-%% ÀÔ·Âµ¥ÀÌÅÍ¿¡ ´ëÇÑ ºĞ·ù ½ÃÀÛ
-%µ¥ÀÌÅÍ ¸¸µé±â
+%% ì…ë ¥ë°ì´í„°ì— ëŒ€í•œ ë¶„ë¥˜ ì‹œì‘
+%ë°ì´í„° ë§Œë“¤ê¸°
 inData = [-50:50 ; ones(1,101)*50 ];
 for i=-49:50
     temp = [-50:50 ; ones(1,101)*i ];
@@ -153,26 +149,26 @@ for i=-49:50
 end
 
 [c,s] = size(inData);
-inDataResult = ones(1,s); %+1 ÀÎÁö -1 ÀÎÁö °á°ú¸¦ ´ãÀ» ¸ÅÆ®¸¯½º
+inDataResult = ones(1,s); %+1 ì¸ì§€ -1 ì¸ì§€ ê²°ê³¼ë¥¼ ë‹´ì„ ë§¤íŠ¸ë¦­ìŠ¤
 
 
-%ÀÔ·Â µ¥ÀÌÅÍ¿¡ ´ëÇÑ j ¹øÂ° °Ë»ç 
+%ì…ë ¥ ë°ì´í„°ì— ëŒ€í•œ j ë²ˆì§¸ ê²€ì‚¬ 
 for j=1:s
 H=0;
 A=0;
 Sigma=0;
 
 for i=1:T
-    %ÀÔ·Â µ¥ÀÌÅÍ¿¡ ´ëÇÑ ¾àºĞ·ù±â T°³·Î °Ë»ç
+    %ì…ë ¥ ë°ì´í„°ì— ëŒ€í•œ ì•½ë¶„ë¥˜ê¸° Tê°œë¡œ ê²€ì‚¬
   
-    %Alpha¸¦ ±¸ÇÔ
+    %Alphaë¥¼ êµ¬í•¨
     A = TrainWeak(i,2);
-    %H(x)¸¦ ±¸ÇÔ
+    %H(x)ë¥¼ êµ¬í•¨
     if(WeakData( TrainWeak(i,1) , 2 ) >  inData( WeakData( TrainWeak(i,1),1) , j  )) 
-        %±¸º° ¿µ¿ªÀÇ ¿ŞÂÊ
+        %êµ¬ë³„ ì˜ì—­ì˜ ì™¼ìª½
         H=WeakData( TrainWeak(i,1) , 3 );
     else
-        %±¸º° ¿µ¿ªÀÇ ¿À¸¥ÂÊ
+        %êµ¬ë³„ ì˜ì—­ì˜ ì˜¤ë¥¸ìª½
         H=WeakData( TrainWeak(i,1) , 3 ) * -1;
     end
     
