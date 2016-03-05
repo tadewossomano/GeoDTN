@@ -1,9 +1,8 @@
 """ GLCustomViewWidget.py - customization of pyqtgraph's qglwidget for some interaction needs
 
-  This module is copied from the GLViewWidget implemented in pyqtgraph so that it can be easily
-  customized for different needs (such as different mouse interactions etc).
+  
 
-  Last update: 08/10/2013, Marco Centin (marco.centin@gmail.com)
+  Last update: 08/10/2013, Tadewos Somano (tadewos85@gmail.com)
   - added a color picking function associated with right mouse click button
     see the part of the code marked with [colorpicking] for more details
 
