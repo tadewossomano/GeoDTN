@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %AdaBoost submitted to Prof. Alberto Signoroni,
 %Tadewos Somano ,92045
-%Melkamsew Tenaw ,
+%
 % 
 % 
 % 
@@ -62,7 +62,7 @@ for j=1:Nsamples-1
     WeakCount = WeakCount + 1;
 end
 WeakCount = WeakCount - 1;
-disp( sprintf('Feature � : %d', WeakCount) );
+disp( sprintf('Feature Â : %d', WeakCount) );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 
@@ -126,7 +126,7 @@ for j=1:Nsamples %changing the weight value D
     end
 end
 
-disp( sprintf('%d ��°', tIndex));
+disp( sprintf('%d ¹øÂ°', tIndex));
 disp( sprintf('error %f', sortTError(1,1) ));
 disp( sprintf('alpha %f' ,alpha));
 disp( sprintf('z %f' , sum(D) ));
