@@ -1,4 +1,12 @@
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University of Brescia, Brescia, Italy
+% Department of Inforamtion Engineering
+%Communication Technologies and Multimedia 
+%Advanced Methods for Information Representaion 
+% Wavelet Thresholding and recursive reconstruction
+% Tadewos Somano Ewalo ,92045
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all;close all;
 X = imread('guys.jpg');  
 [height,width,Depth] = size(X);
