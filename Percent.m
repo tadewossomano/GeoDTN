@@ -1,4 +1,7 @@
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AMIR 
+%Wavelet Thresholding and recursive reconstruction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all;close all;
 X = imread('lena.jpg');  
 [height,width,Depth] = size(X);
