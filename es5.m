@@ -1,5 +1,5 @@
 %%Exercise 5: Simulation slotted aloha protocol (second method)
-% written by Andrea Bonisoli in the academic year 2010-2011
+% written by Tadewos Somano in the academic year 2013/2014
 
 m=25;		% number of stations
 N=2000000;	% number of steps
