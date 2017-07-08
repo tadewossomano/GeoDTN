@@ -1,6 +1,8 @@
 """ Matrix4x4Np - A simple interface from QtGui::Matrix4x4 to NumPy
 
   This file contains a class which extends the QMatrix4x4 for a better NumPy integration
+  
+  Last update: 22/10/2013, Marco Centin (marco.centin@gmail.com)
 
 """
 import numpy as np
