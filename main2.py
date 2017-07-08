@@ -12,7 +12,6 @@
 '''
 Created on Dec 8, 2013
 
-@author: alessandro
 '''
 import os
 import classification
