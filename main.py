@@ -1,15 +1,21 @@
-#-------------------------------------------------------------------------------
-# Name:        module1
-# Purpose:
-#
-# Author:      tad
-#
-# Created:     19/12/2013
-# Copyright:   (c) tad 2013
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
+'''
+Data Scientist for  Day - Codelab source code - main.py
 
+Copyright (C) 2013  Ferrari Alessandro
 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.o
+'''
 import os
 import classification
 import numpy as np
@@ -43,8 +49,8 @@ print "Starting model selection ..."
 C_list = [0.0001,0.001,0.01,0.1,1,10,100,1000,10000]
 gamma_list = [0.0001,0.001,0.01,0.1,1,10, 100,10000]
 
-ms_result = classification_obj.model_selection(train_scaled,target,n_iterations=3,
-                                               C_list=C_list,
+ms_result = classification_obj.model_selection(train_scaled,target,n_iterations=3, 
+                                               C_list=C_list, 
                                                gamma_list=gamma_list)
 
 #displaying model selection
@@ -58,7 +64,7 @@ plt.show()
 
 #entering the C and gamma chosen
 print "Plotted graphics for model selection. Choose the best C and gamma ..."
-
+            
 while True:
     C_str = raw_input("Enter the C value suggested by model selection:")
     try:
@@ -77,7 +83,7 @@ while True:
         continue
     break
 
-print "Parameters selection performed! C = {0}, gamma = {1}".format(C, gamma)
+print "Parameters selection performed! C = {0}, gamma = {1}".format(C, gamma)    
 
 #training
 print "Performing training..."
@@ -97,12 +103,12 @@ print "Classification performed on the test set!"
 print "Plotting learning curves..."
 learning_curves = LearningCurves()
 learning_curves_result = learning_curves.compute(X=train_scaled,y=target,C=C,gamma=gamma)
-
-plot_learning_curves(x1=learning_curves_result["m_list"],
-                     y1=learning_curves_result["tr_errors"],
-                     x2=learning_curves_result["m_list"],
+    
+plot_learning_curves(x1=learning_curves_result["m_list"], 
+                     y1=learning_curves_result["tr_errors"], 
+                     x2=learning_curves_result["m_list"], 
                      y2=learning_curves_result["cv_errors"])
-
+    
 plt.show()
 
 #save data in the submission format

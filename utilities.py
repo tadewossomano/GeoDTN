@@ -1,14 +1,3 @@
-#-------------------------------------------------------------------------------
-# Name:        module1
-# Purpose:
-#
-# Author:      tad
-#
-# Created:     19/12/2013
-# Copyright:   (c) tad 2013
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
-
 '''
 Data Scientist for  Day - Codelab source code - utilities.py
 
@@ -34,30 +23,30 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_3d( x, y, z, xlabel = "log10(gamma)", ylabel ="log10(C)" , zlabel = "accuracy", title = "Accuracy by C and gamma"):
-
+        
         fig = plt.figure()
-        fig.canvas.set_window_title('{0}'.format(title))
+        fig.canvas.set_window_title('{0}'.format(title)) 
         ax = fig.add_subplot(111, projection='3d')
-
+        
         ax_xlabel = ax.set_xlabel(xlabel)
         ax_ylabel = ax.set_ylabel(ylabel)
         ax_zlabel = ax.set_zlabel(title)
-
+        
         x1=np.log10(x)
         y1=np.log10(y)
         z1=z
         X1,Y1=np.meshgrid(np.array(x1), np.array(y1))
         surf = ax.plot_surface(X1, Y1, z1, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0, antialiased=False)
         ax.set_zlim(-1.01, 1.01)
-
+    
         ax.zaxis.set_major_locator(LinearLocator(10))
         ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
-
+    
         fig.colorbar(surf, shrink=0.5, aspect=5)
-
+        
 
 def plot_learning_curves(x1, y1, x2, y2):
-
+    
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_xlabel('Number of samples')
@@ -67,7 +56,7 @@ def plot_learning_curves(x1, y1, x2, y2):
 
 
 def save_csv_submitted_labels(predicted_labels, filename):
-
+       
         f = open(filename, "w")
         len_labels = predicted_labels.shape[0]
         f.write("Id,Solution\n")

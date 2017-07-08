@@ -1,17 +1,20 @@
-#-------------------------------------------------------------------------------
-# Name:        module1
-# Purpose:
-#
-# Author:      tad
-#
-# Created:     19/12/2013
-# Copyright:   (c) tad 2013
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
-
 '''
 Data Scientist for  Day - Codelab source code - classification.py
 
+Copyright (C) 2013  Ferrari Alessandro
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.o
 '''
 
 from sklearn.cross_validation import train_test_split
@@ -35,12 +38,20 @@ def dataset_scaling(X):
 def misclassification_errors(classifier, X_tr, y_tr, X_cv, y_cv):
 
     """
-        TODO: Exercise 1
-        Given an already trained classifier, the training set features and labels, and the
-        cross-validation features and labels, compute the misclassification error measure
-        on the training set and on the cross validation set, as explained in the lab track.
-        Try to do it without for loops. That does not mean that you can use while loop instead.
+	TODO: Exercise 1
+	Given an already trained classifier, the training set features and labels, and the
+	cross-validation features and labels, compute the misclassification error measure
+	on the training set and on the cross validation set, as explained in the lab track.
+	Try to do it without for loops. That does not mean that you can use while loop instead.
     """
+    yp = classifier.predict(X_cv)
+
+
+    np.int(eX)
+    np.int(ey)
+
+    tr_err=sum(eX)/np.size(eX)
+    cv_err=sum(ey)/np.size(ey)
 
     raise Exception("Implement your own misclassification error measure!")
 
@@ -102,20 +113,20 @@ class ModelSelection(object):
                 idx_gamma=0
                 for gamma in self.gamma_list:
 
-                    """
-                        TODO: Exercise 2
-                        For each combination of C and gamma, compute the training error, cross-validation error,
-                        accuracy, precision, recall and f1 score obtained with the relative SVM rbf classifier,
-                        obtained averaging the results obtained by the different dataset partitions re-arrangements.
-                        The results will be stored relatively in the numpy arrays tr_err_by_C_and_gamma,
-                        cv_err_by_C_and_gamma, acc_by_C_and_gamma, prec_by_C_and_gamma, recall_by_C_and_gamma,
-                        f1_score_by_C_and_gamma created previously. Columns contain the C index, while rows contain
-                        the gamma index. While doing the exercise, you may find useful the SVC class in sklearn.svm
-                        module, the misclassification_errors that you implemented in the previous exercise and the
-                        score functions that are implemented in sklearn metrics.
-                    """
+		    """
+			TODO: Exercise 2
+			For each combination of C and gamma, compute the training error, cross-validation error,
+			accuracy, precision, recall and f1 score obtained with the relative SVM rbf classifier,
+			obtained averaging the results obtained by the different dataset partitions re-arrangements.
+			The results will be stored relatively in the numpy arrays tr_err_by_C_and_gamma,
+			cv_err_by_C_and_gamma, acc_by_C_and_gamma, prec_by_C_and_gamma, recall_by_C_and_gamma,
+			f1_score_by_C_and_gamma created previously. Columns contain the C index, while rows contain
+			the gamma index. While doing the exercise, you may find useful the SVC class in sklearn.svm
+			module, the misclassification_errors that you implemented in the previous exercise and the
+			score functions that are implemented in sklearn metrics.
+		    """
 
-                    raise Exception("Wake up! You are supposed to implement this part of code!")
+		    raise Exception("Wake up! You are supposed to implement this part of code!")
 
 
                     idx_gamma=idx_gamma + 1
@@ -205,20 +216,20 @@ class LearningCurves(object):
                 reduced_y = y_tr[y_mask!=0]
 
 
-                """
-                        TODO: Exercise 3
-                        Read the code of the current method "compute" and understand what is
-                        happening. Once you have understood the code, try to understand the
-                        meaning of the stratifiedShuffleMask method. What is that method suppose
-                        to do? What do reduced_X and reduced_y contain?
-                        Then, compute for each m, the training error and the cross-validation error
-                        averaged by the different re-arranged dataset ripartitions, and store them
-                        relatively in the tr_errors and cv_errors numpy vectors, order by the idx index.
-                """
+		"""
+			TODO: Exercise 3
+			Read the code of the current method "compute" and understand what is
+			happening. Once you have understood the code, try to understand the
+			meaning of the stratifiedShuffleMask method. What is that method suppose
+			to do? What do reduced_X and reduced_y contain?
+			Then, compute for each m, the training error and the cross-validation error
+			averaged by the different re-arranged dataset ripartitions, and store them
+			relatively in the tr_errors and cv_errors numpy vectors, order by the idx index.
+		"""
 
                 raise Exception("One last effort! It is the last exercise.")
 
-                idx+=1
+		idx+=1
 
                 result=dict()
                 result["m_list"]=m_list
