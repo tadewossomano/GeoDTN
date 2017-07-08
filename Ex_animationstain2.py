@@ -18,9 +18,6 @@ if __name__ == '__main__':
 
   In this final exercise we load a pointcloud, we color each point using a different color so that
   we can color-pick the points. Then we define a "staining" animation based on color pick changes.
-
-  Last update: 08/10/2013, Marco Centin (marco.centin@gmail.com)
-
 """
 from pyqtgraph.Qt import QtGui, QtCore
 import pyqtgraph.opengl as gl
