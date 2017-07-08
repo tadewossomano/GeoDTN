@@ -2,7 +2,7 @@
 
   This file implements an extension of pyqtgraph for visualizing PointClouds.
 
-  Last update: 01/10/2013, Marco Centin (marco.centin@gmail.com)
+  Last update: 04/10/2013, Marco Centin (marco.centin@gmail.com)
 
 """
 
@@ -26,10 +26,10 @@ class GLPointCloudPlotItem(GLGraphicsItem):
     def __init__(self, **kwds):
         
         GLGraphicsItem.__init__(self)
-        glopts = kwds.pop('glOptions', 'additive')
-        
+        glopts = kwds.pop('glOptions', 'opaque')
         self.setGLOptions(glopts)
         self.points = None
+        self.colors = None
         self.width = 1.
         self.color = (1.0,1.0,1.0,1.0)
         self.setData(**kwds)
@@ -64,11 +64,9 @@ class GLPointCloudPlotItem(GLGraphicsItem):
             
             # Set the color state
             if self.colors is None:
-                glColor4f(self.color)
+                glColor4f(*self.color)
             else:
-                glEnable(GL_COLOR_MATERIAL)
                 glEnableClientState(GL_COLOR_ARRAY)
-                glColorMaterial( GL_FRONT_AND_BACK, GL_DIFFUSE )
                 glColorPointerf( self.colors )  
             
             glPointSize(self.point_size)
@@ -84,7 +82,4 @@ class GLPointCloudPlotItem(GLGraphicsItem):
             
             if not self.colors is None:
                 glDisableClientState(GL_COLOR_ARRAY)
-                glDisable(GL_COLOR_MATERIAL)
         
-    
- 

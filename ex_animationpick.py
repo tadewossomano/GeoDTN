@@ -46,42 +46,41 @@ oldcol = black
 # Define the animation function
 def check_pick_and_cancel():
     """ Animate the colors of the pointcloud based on color pick changes
-    
+
       When a new color is picked (glwidget.picked_color change its value) we:
       1) find the point P with the picked color (linear search);
       2) change its color to black
-      
+
       Note: this is a dirty animation script with poor design
-    
+
     """
     global glwidget, pointcloud
     global numpoints, colors, indices
     global epsilon, white, black
     global oldcol
-    
+
     col = glwidget.picked_color
     new_valid_color = col <> None and oldcol <> None \
         and np.linalg.norm(col-black)  > epsilon \
         and np.linalg.norm(col-white)  > epsilon \
-        and np.linalg.norm(col-oldcol) > epsilon 
-    
-    if new_valid_color: 
-        
+        and np.linalg.norm(col-oldcol) > epsilon
+        #\ means that you are on the same line!
+
+    if new_valid_color:
+
         # Search the point with that color
         index = None
-        #<<<
-        #<<< Write your code here: you have to scan the colors array and stop when you find a
-        #<<< color which equal to the picked color (up to epsilon!). Then you will have the
-        #<<< resulting index! Use a for loop and the break keyword!
-        #<<<
-        
+        for i in xrange(numpoints):
+            if np.linalg.norm(colors[i]-col) < epsilon:
+                index=i
+                break
         # Set the corresponding color and set re-set the plot item
         if index <> None:
             colors[index] = black
             pointcloud.setData(colors=colors)
-            
+
         oldcol = col
-        
+
 
 # Define a new timer and connect the animation to it
 timer = QtCore.QTimer()

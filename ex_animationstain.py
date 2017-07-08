@@ -136,9 +136,9 @@ def check_pick_and_stain():
                 glwidget.update()
 
 # Define a new timer and connect the animation to it
-timer = QtCore.QTimer()  #user Qt library to define timer
+timer = QtCore.QTimer()
 timer.timeout.connect(check_pick_and_stain)
-timer.start(30)   #30 miliseconds
+timer.start(30)
 
 # Execute the application
 print "Right click on a point to start staining, click on background to cancel..."

@@ -3,7 +3,7 @@
   This auxiliary script visualizes the Moebius strip in solid white
 
 """
-from pyqtgraph.Qt import QtGui    #library from QTGUI
+from pyqtgraph.Qt import QtGui
 import pyqtgraph.opengl as gl
 from pyqtgraph import Vector
 import numpy as np
@@ -15,7 +15,7 @@ from ex_moebius import moebius_strip
 app = QtGui.QApplication([])
 
 # Create a custom glwidget object
-glwidget = GLCustomViewWidget.GLCustomViewWidget() #OpenGL Widget
+glwidget = GLCustomViewWidget.GLCustomViewWidget()
 
 # Compute the moebius strip
 points = moebius_strip(nu=320, nv=40)
