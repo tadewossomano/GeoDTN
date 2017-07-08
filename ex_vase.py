@@ -8,8 +8,7 @@
 
 # Our laboratory functions module!
 import ex_labfunctions as lf
-from ex_labfunctions import np #it's imported from the imported file directly
-
+from ex_labfunctions import np
 
 # The core part of PyQtGraph
 from pyqtgraph.Qt import QtGui, QtCore
@@ -39,12 +38,17 @@ center = np.sum(points, axis=0)/float(numpoints)
 min_xyz, max_xyz = np.min(points, axis=0), np.max(points, axis=0)
 maxSize = max([max_xyz[0]-min_xyz[0],max_xyz[1]-min_xyz[1],max_xyz[2]-min_xyz[2]])
 
+# Save view parameters for the animation
+glcenter = Vector(center[0],center[1],center[2])
+gldistance = 3.0*maxSize
+glelevation = 20
+
 # Set glwidget initial values
 glwidget.resize( 900, 600 )
-glwidget.opts['center'] = Vector(center[0],center[1],center[2])
-glwidget.opts['distance'] = 3.0*maxSize
+glwidget.opts['center'] = glcenter
+glwidget.opts['distance'] = gldistance
 glwidget.opts['azimuth'] = -90
-glwidget.opts['elevation'] = 20
+glwidget.opts['elevation'] = glelevation
 glwidget.show()
 
 # Set the "floor" grid 2% below the object
@@ -71,51 +75,54 @@ oldcol = black
 # Define the animation function
 def check_pick_and_model():
     """ Deform a vase pointcloud by piching the rings
-
+    
       When a new color is picked (glwidget.picked_color change its value) we:
       1) find the ring R with the picked color (linear search);
       2) change the shape of the neighbors rings so that we pinch-in the ring
-
+      
       Optional exercise: make the vase rotate and stabilize the view angle!
-
+      
       Note: this is a dirty animation script with poor design
-
+    
     """
     global glwidget, pointcloud
     global points, zxcurve, colors, numpoints, numtheta
     global epsilon, white, black
     global oldcol
-
+    
     col = glwidget.picked_color
-
-    new_valid_color = col <> None and oldcol <> None and np.linalg.norm(col-oldcol) > epsilon
-
-    if new_valid_color:
-
+    
+    new_valid_color = col <> None and oldcol <> None and np.linalg.norm(col-oldcol) > epsilon 
+    
+    if new_valid_color: 
+        
         not_black = np.linalg.norm(col-black) > epsilon
         not_white = np.linalg.norm(col-white) > epsilon
-
+        
         if not_black and not_white:
-
+        
             # Search the ring with that color
             index = None
             for i in xrange(ring_colors.shape[0]):
                 if np.linalg.norm(ring_colors[i]-col) < epsilon:
                     index = i
                     break
-
+            
             # Pinch in the vase
             if index <> None:
                 lf.zxcurve_pinch_in(zxcurve, index)
                 points = lf.surface_of_revolution(zxcurve, numtheta)
                 pl_points.setData(points=points)
-
+            
             glwidget.picked_color = None
             oldcol = black
-
-    #For rotation
+    
     glwidget.opts['azimuth'] += 2
+    glwidget.opts['center'] = 0.8*glwidget.opts['center']+0.2*glcenter
+    glwidget.opts['distance'] = 0.999*glwidget.opts['distance']+0.001*gldistance
+    glwidget.opts['elevation'] = 0.999*glwidget.opts['elevation']+0.001*glelevation
     glwidget.update()
+        
 
 # Define a new timer and connect the animation to it
 timer = QtCore.QTimer()

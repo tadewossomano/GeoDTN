@@ -4,6 +4,7 @@
 
 """
 import numpy as np
+from Matrix4x4Np import Matrix4x4Np
 
 def moebius_strip( nu=800, nv=100 ):
 
@@ -97,8 +98,8 @@ def vase_profile( numrings ):
 
     """
 
-    z = np.linspace(0.0,2.0*np.pi,numrings) #It's like Matlab syntax!
-    x = 2.0 + np.cos( 0.38*np.pi*( z + np.pi ) )
+    z = np.linspace(0.0, 2.0*np.pi, numrings)
+    x = 2.0+np.cos(0.38*np.pi*(z+np.pi))
     zxcurve = np.column_stack([z,x])
     return zxcurve
 
@@ -106,7 +107,7 @@ def surface_of_revolution( zxcurve, numtheta ):
 
     """ Return the pointcloud of the surface of revolution of the curve
 
-      Return a numpy array with shape [zxcurve.shape[0]*ntheta, 3] containing floating point
+      Return a numpy array with shape [zxcurve.shape[0]*numtheta, 3] containing floating point
       coordinates of the surface of revolution obtained by rotating the curve (seen as in
       the XZ-plane, that is, the curve alpha(t)=[ curve[t], 0, t ] ) along the Z axis.
 
@@ -124,13 +125,12 @@ def surface_of_revolution( zxcurve, numtheta ):
     points = np.empty([zxcurve.shape[0]*numtheta, 3])
     for icurve in xrange(numcurve):
         for itheta in xrange(numtheta):
-            theta = itheta*2*np.pi/numtheta #just 2 and not 2.0 because i divide by pi that is floating point
-            r = zxcurve[icurve,1]
-            points[i,0] = r*np.cos(theta)   #x axis
-            points[i,1] = r*np.sin(theta)   #y axis
-            points[i,2] = zxcurve[icurve,0] #0 because z is the first component!
+            theta = 2.0*np.pi*itheta/numtheta
+            z, x = zxcurve[icurve]
+            points[i,0] = x*np.cos(theta)
+            points[i,1] = x*np.sin(theta)
+            points[i,2] = z
             i += 1
-            #code_compile = True #Fake instruction if you need to execute the code
 
     return points
 
@@ -142,8 +142,108 @@ def zxcurve_pinch_in( zxcurve, i ):
       the corresponding rings will be smaller.
 
     """
-
     window = [ 0.99, 0.98, 0.97, 0.98, 0.99 ]
-    #<<<
-    #<<< Insert your code here!
-    #<<<
+    winsize = len(window)
+    for j in xrange(winsize):
+        index = i+j-winsize/2
+        if index >= 0 and index < zxcurve.shape[0]:
+            zxcurve[index,1] *= window[j]
+
+def angle_between(v1, v2):
+
+    """ Returns the angle in radians between vectors 'v1' and 'v2'
+
+      >>> angle_between((1, 0, 0), (0, 1, 0))
+      1.5707963267948966
+      >>> angle_between((1, 0, 0), (1, 0, 0))
+      0.0
+      >>> angle_between((1, 0, 0), (-1, 0, 0))
+      3.141592653589793
+    """
+    v1_u = v1/np.linalg.norm(v1)
+    v2_u = v2/np.linalg.norm(v2)
+    angle = np.arccos(np.dot(v1_u, v2_u))
+    if np.isnan(angle):
+        if (v1_u == v2_u).all():
+            return 0.0
+        else:
+            return np.pi
+    return angle
+
+def xyrectangle_points( width, height, numpoints ):
+
+    """ Sample some random points inside a given rectangle centered on the XY plane
+
+      Arguments:
+        width     =  a float number: the width of the rectangle
+        height    =  a float: the height of the rectangle
+        numpoints =  the number of points to sample
+
+    """
+    x = np.random.uniform(-width/2.0, width/2.0, numpoints)
+    y = np.random.uniform(-height/2.0, height/2.0, numpoints)
+    z = np.zeros(numpoints)
+    return np.column_stack([x,y,z])
+
+def sample_plane_portion(
+        width     = 1.0,
+        height    = 1.0,
+        numpoints = 100,
+        center    = [0.0, 0.0, 0.0],
+        normal    = [0.0, 0.0, 1.0],
+        rotation  = 0.0,
+        noise     = None ):
+
+    """ Sample points on a plane portion of given width and position in space
+
+      Arguments:
+        width     =  a float number, the width of the plane
+        height    =  a float number, the height of the plane
+        numpoints =  the number of sampled points
+        center    =  the center of the resulting plane
+        normal    =  the normal vector of the resulting plane
+        rotation  =  the rotation angle of the rectangle in the plane, in degrees
+        noise     =  a vector with 3 floats, the variance of some additional gaussian noise
+
+    """
+
+    # Some constants
+    epsilon = 0.000001
+    yaxis = np.array([0.0, 1.0, 0.0])
+    zaxis = np.array([0.0, 0.0, 1.0])
+
+    # Sample points on XY plane
+    points = xyrectangle_points(width, height, numpoints)
+
+    # Compute the axis of rotation
+    normal = normal/np.linalg.norm(normal)
+    nrot_axis = np.cross(normal, zaxis)
+    nrot_norm = np.linalg.norm(nrot_axis)
+
+    # Approximate solution in degenerate cases
+    if nrot_norm < epsilon: nrot_axis = yaxis   #trick used in videogmes
+    else: nrot_axis = nrot_axis/nrot_norm
+
+    # Compute the angle of rotation
+    nrot_angle = -angle_between(normal, zaxis) * (360.0/(2*np.pi))
+
+    # Assemble the transformation matrix
+    M = Matrix4x4Np()
+    M.np_translate(center)
+    M.np_rotate(rotation, normal)
+    M.np_rotate(nrot_angle, nrot_axis)
+
+    # Apply the transformation
+    M.np_apply(points)
+
+    # Eventually gaussian noise
+    if not noise is None:
+        mean = np.zeros(3)
+        covariance_matrix = np.array([
+            [ noise[0],   0.0,      0.0     ],
+            [   0.0,    noise[1],   0.0     ],
+            [   0.0,      0.0,    noise[2] ]])
+        for i in xrange(points.shape[0]):
+            points[i] += np.random.multivariate_normal(mean, covariance_matrix)
+
+    return points
