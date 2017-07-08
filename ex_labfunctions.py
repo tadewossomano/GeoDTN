@@ -279,7 +279,7 @@ def preview_points(points, colors=None, azimuth=45):
     min_xyz, max_xyz = np.min(points, axis=0), np.max(points, axis=0)
     maxSize = max([max_xyz[0]-min_xyz[0],max_xyz[1]-min_xyz[1],max_xyz[2]-min_xyz[2]])
     
-    # Set up the glwidget
+    # Set up the gqwidget
     app = QtGui.QApplication([])
     glwidget = GLCustomViewWidget.GLCustomViewWidget()
     glwidget.resize( 1000, 650 )
@@ -340,16 +340,17 @@ def load_xyz( filename ):
         with open(filename, "r") as f:
             i = 0
             points = np.empty([number_of_lines(filename), 3])
-            for line in f:
-                vals = line.split()
-                if len(vals) >= 3:
-                    x, y, z = vals[0], vals[1], vals[2]
-                    points[i,0] = float(x)
-                    points[i,1] = float(y)
-                    points[i,2] = float(z)
-                    i += 1
-            if points.shape[0] == 0: return None   
-            return points                     
+            with open(filename, "r") as f:
+                for line in f:
+                    vals = line.split()
+                    if len(vals) >= 3:
+                        x, y, z = vals[0], vals[1], vals[2]
+                        points[i,0] = float(x)
+                        points[i,1] = float(y)
+                        points[i,2] = float(z)
+                        i += 1
+                if points.shape[0] == 0: return None   
+                return points                     
                         
     except IOError:
         
