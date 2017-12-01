@@ -1,6 +1,8 @@
-// Implementation of the Socket class.
-
-
+/*Implementation of the Socket class.
+*
+* Written-by: Tadewos Somano <Tadewos.SomanoEwalo@tno.nl,tadewos85@gmail.com>
+* 2015 TNO
+*/
 #include "Socket.h"
 #include "string.h"
 #include <string.h>
