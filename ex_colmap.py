@@ -26,26 +26,26 @@ def color_map_array( size, shuffle = False ):
     assert size > 1
 
     # Compute how many steps for each channel
-    k = int(size**(1/3.0))+1
+    k = int(size**(1/3.0))+1 #** is the power function
     numcols = k*k*k
     colors = np.empty([numcols, 3])
 
     # Set the channel range and the step
-    colrange = [0.0001, 0.9999]
-    colstep = colrange[1]-colrange[0]
+    colrange = [0.0001, 0.9999] #from almost 0 to almost 1
+    colstep = (colrange[1]-colrange[0])/float(k) #python don't have statyc types so i cannod divide by integers
 
     # Fill-in the colors
     i = 0
     for ir in xrange(k):
         for ig in xrange(k):
             for ib in xrange(k):
-                colors[i,0] = ir*colstep
-                colors[i,1] = ig*colstep
-                colors[i,2] = ig*colstep#<<< Fill-in with proper float number
+                colors[i,0] = colstep*ir
+                colors[i,1] = colstep*ig
+                colors[i,2] = colstep*ib
                 i += 1
 
-    # The first two have minimum distance!#Comppute distance between 2  np.lnalg.norm()
-    epsilon = 0.0#<<< Fill-in with proper float number
+    # The first two have minimum distance!
+    epsilon = 0.4999*np.linalg.norm(colors[0]-colors[1])
     if shuffle: np.random.shuffle(colors)
 
-    return colors[0:size], epsilon
+    return colors[0:size], epsilon  #we can return multiple values

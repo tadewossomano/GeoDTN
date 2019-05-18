@@ -38,12 +38,17 @@ center = np.sum(points, axis=0)/float(numpoints)
 min_xyz, max_xyz = np.min(points, axis=0), np.max(points, axis=0)
 maxSize = max([max_xyz[0]-min_xyz[0],max_xyz[1]-min_xyz[1],max_xyz[2]-min_xyz[2]])
 
+# Save view parameters for the animation
+glcenter = Vector(center[0],center[1],center[2])
+gldistance = 3.0*maxSize
+glelevation = 20
+
 # Set glwidget initial values
 glwidget.resize( 900, 600 )
-glwidget.opts['center'] = Vector(center[0],center[1],center[2])
-glwidget.opts['distance'] = 3.0*maxSize
+glwidget.opts['center'] = glcenter
+glwidget.opts['distance'] = gldistance
 glwidget.opts['azimuth'] = -90
-glwidget.opts['elevation'] = 20
+glwidget.opts['elevation'] = glelevation
 glwidget.show()
 
 # Set the "floor" grid 2% below the object
@@ -111,6 +116,12 @@ def check_pick_and_model():
             
             glwidget.picked_color = None
             oldcol = black
+    
+    glwidget.opts['azimuth'] += 2
+    glwidget.opts['center'] = 0.8*glwidget.opts['center']+0.2*glcenter
+    glwidget.opts['distance'] = 0.999*glwidget.opts['distance']+0.001*gldistance
+    glwidget.opts['elevation'] = 0.999*glwidget.opts['elevation']+0.001*glelevation
+    glwidget.update()
         
 
 # Define a new timer and connect the animation to it
