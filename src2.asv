@@ -1,0 +1,117 @@
+% 23/10/2012 - Lab. experience n.4
+
+clear all;close all;
+
+% ==============================================
+%           Punto 1 - Image Sampling
+% ==============================================
+
+[U,V]=ndgrid(-15:0.05:15);
+u = U(:,1)';                      
+v = V(1,:);
+[X,Y]=ndgrid(-6:0.05:6);
+x = X(:,1)';
+y = Y(1,:);
+
+syntheticImageOriginal = 255*rect(X/2).*rect(Y/6);
+syntheticImage = syntheticImageOriginal;
+%figure, surf(X,Y,abs(syntheticImage)),xlabel('x'),ylabel('y'),title('syntheticImage'),axis([-6 6 -6 6 0 256]),shading interp;
+
+syntheticImage = uint8(syntheticImage);
+figure, imshow(syntheticImage);
+syntheticImage = double(syntheticImage);
+
+spettro_image = mcs_ft2(syntheticImage, u, v, x, y);
+%figure, surf(u,v,abs(spettro_image)),xlabel('u'),ylabel('v'),title('Spettro syntheticImage'),shading interp;
+
+% "Subsample" the image by a factor of 4 in the vertical direction by 
+% multiplying it by a sampling matrix made of zeros and ones.
+% Compute its transform and display it.
+
+syntheticImageSUBVertic4 = zeros(size(syntheticImage));
+syntheticImageSUBVertic4(:,1:4:end)=1;
+
+syntheticImage = syntheticImage.*syntheticImageSUBVertic4;
+
+syntheticImage = uint8(syntheticImage);
+figure, imshow(syntheticImage);
+syntheticImage = double(syntheticImage);
+ 
+spettro_imageSUBVertic4 = mcs_ft2(syntheticImage, u, v, x, y);
+figure, surf(u,v,abs(spettro_imageSUBVertic4)),xlabel('u'),ylabel('v'),title('Spettro syntheticImage'),shading interp;
+
+
+% Subsample the signal by a factor of 4 in both horizontal and vertical 
+% directions. Compute the transform and display it.
+
+syntheticImageSUBVertHor4 = zeros(size(syntheticImage));
+syntheticImageSUBVertHor4(1:4:end,1:4:end)=1;
+
+syntheticImage = syntheticImageOriginal.*syntheticImageSUBVertHor4;
+
+syntheticImage = uint8(syntheticImage);
+figure, imshow(syntheticImage);
+syntheticImage = double(syntheticImage);
+ 
+spettro_imageSUBVertic4 = mcs_ft2(syntheticImage, u, v, x, y);
+figure, surf(u,v,abs(spettro_imageSUBVertic4)),xlabel('u'),ylabel('v'),title('Spettro syntheticImage'),shading interp;
+
+
+% Repeat the experiment using a quincunx grid.
+quincunxGrid = syntheticImageSUBVertHor4;
+quincunxGrid(3:4:end,3:4:end)=1;
+
+syntheticImage = syntheticImageOriginal.*quincunxGrid;
+
+figure, imshow(quincunxGrid);
+
+syntheticImage = uint8(syntheticImage);
+figure, imshow(syntheticImage);
+syntheticImage = double(syntheticImage);
+
+spettro_imageQuinc = mcs_ft2(syntheticImage, u, v, x, y);
+figure, surf(u,v,abs(spettro_imageQuinc)),xlabel('u'),ylabel('v'),title('Spettro imageQuinc'),shading interp;
+
+pause;
+close all;
+
+
+%% ==============================================
+%           punto 2 - 3d cylindric signals
+% ==============================================
+
+time=1:1:100;
+f0=6;
+%figure;
+for k=1:length(time)
+    video(:,:,k) = sin(2*pi*f0*(X-k/20));
+    %surf(x,y,video(:,:,k)),xlabel('x'),ylabel('y'),title('video - al k-istante'),shading interp;%,axis([-6 6 -6 6 0 1]);
+    %pause;
+end
+
+spettro_video = fftn(video);
+spettro_video = fftshift(spettro_video);
+
+a = ceil(length(y)/2);
+A = reshape(spettro_video(:,a,:),length(x),length(time));
+surf(abs(A)),shading interp;
+pause;
+
+for i=1:length(time)
+    surf(abs(spettro_video(:,:,i))),shading interp,axis([-length(x) 6 -6 6 0 1]);
+    pause;
+end
+
+
+
+
+
+
+pause;
+close all;
+
+
+
+
+
+
